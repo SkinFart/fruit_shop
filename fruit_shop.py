@@ -13,7 +13,7 @@ class Program(tk.Frame):
         self.grid()
         self.a = self.c()
         self.create_widgets()
-        master.geometry("800x800")
+        master.geometry("600x400")
 
     def create_widgets(self):
         
@@ -87,7 +87,7 @@ class Program(tk.Frame):
 
         self.newWindow.title("New Window")
 
-        self.newWindow.geometry("800x800")
+        self.newWindow.geometry("600x400")
 
         a = tk.Button(self.newWindow, text='test', command=self.test)
         a.grid(row=1)

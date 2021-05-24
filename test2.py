@@ -1,90 +1,109 @@
+#from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 import random
 from test import fruit
+from tkinter import messagebox
+from PIL import ImageTk, Image  
+
+class Program(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.grid()
+        self.a = self.c()
+        self.create_widgets()
+        self.n=0
+        master.geometry("600x400")
+
+    def create_widgets(self):
+        
+        # Create combo box for deals on product
+        n = tk.StringVar()
+        self.abc = ttk.Combobox(self, width = 27, textvariable = n)
+        self.abc["values"] = (self.a)
+        self.abc.grid(column=5, row=1)
+        self.abc.current(0)
+
+        # Create Image for item
+        self.img = Image.open("vvv.png")
+        self.img = self.img.resize((50,50), Image.ANTIALIAS)
 
 
-def create_input_frame(container):
+        self.photo = ImageTk.PhotoImage(self.img)
+        
+        # Image Button
+        self.img_but = tk.Button(self, image=self.photo, command=self.openNewWindow)
+        self.img_but.grid(row=3)
 
-    frame = ttk.Frame(container)
-
-    # grid layout for the input frame
-    frame.columnconfigure(0, weight=1)
-    frame.columnconfigure(0, weight=3)
-
-    # Find what
-    ttk.Label(frame, text='Find what:').grid(column=0, row=0, sticky=tk.W)
-    keyword = ttk.Entry(frame, width=30)
-    keyword.focus()
-    keyword.grid(column=1, row=0, sticky=tk.W)
-
-    # Replace with:
-    ttk.Label(frame, text='Replace with:').grid(column=0, row=1, sticky=tk.W)
-    replacement = ttk.Entry(frame, width=30)
-    replacement.grid(column=1, row=1, sticky=tk.W)
-
-    # Match Case checkbox
-    match_case = tk.StringVar()
-    match_case_check = ttk.Checkbutton(
-        frame,
-        text='Match case',
-        variable=match_case,
-        command=lambda: print(match_case.get()))
-    match_case_check.grid(column=0, row=2, sticky=tk.W)
-
-    # Wrap Around checkbox
-    wrap_around = tk.StringVar()
-    wrap_around_check = ttk.Checkbutton(
-        frame,
-        variable=wrap_around,
-        text='Wrap around',
-        command=lambda: print(wrap_around.get()))
-    wrap_around_check.grid(column=0, row=3, sticky=tk.W)
-
-    for widget in frame.winfo_children():
-        widget.grid(padx=0, pady=5)
-
-    return frame
+        # Amount
+        xd = tk.Button(self,width="5", text="+1", command=self.mt)
+        xd.grid(column=5, row=2)
 
 
-def create_button_frame(container):
-    frame = ttk.Frame(container)
+        # Button that closes the program
+        self.quit = tk.Button(self, text="QUIT", fg="red",
+                              command=self.master.destroy)
+        self.quit.grid(column=5, row=3)
 
-    frame.columnconfigure(0, weight=1)
+        # Test that checks whats in combobox 
+        xyz = ttk.Button(self, text="Get Value",command=self.check)
+        xyz.grid(column=5, row=4)
 
-    ttk.Button(frame, text='Find Next').grid(column=0, row=0)
-    ttk.Button(frame, text='Replace').grid(column=0, row=1)
-    ttk.Button(frame, text='Replace All').grid(column=0, row=2)
-    ttk.Button(frame, text='Cancel').grid(column=0, row=3)
+    
+    def check(self):
+        a = self.abc.get()
+        print(a)
+        return(a)
 
-    for widget in frame.winfo_children():
-        widget.grid(padx=0, pady=3)
+    def mt(self):
+        print(amount)
+    
+    def c(self):
+        a = []
+        for i in fruit:
+            x = fruit[i][FRUIT_NAME]
+            a.append(x)
+        return(a)
 
-    return frame
+    def openNewWindow(self):
+        
+        self.newWindow = tk.Toplevel(root)
+        self.newWindow.title("New Window")
 
+        self.newWindow.geometry("600x400")
 
-def create_main_window():
+        #a = tk.Button(self.newWindow, text='test', command=self.test)
+        #a.grid(row=1)
 
-    # root window
-    root = tk.Tk()
-    root.title('Replace')
-    root.geometry('400x150')
-    root.resizable(0, 0)
-    # windows only (remove the minimize/maximize button)
-    root.attributes('-toolwindow', True)
+        r = 0
+        n=0
+        img = Image.open("vvv.png")
+        img = img.resize((50,50), Image.ANTIALIAS)
+        self.fgh = ImageTk.PhotoImage(img)
+        #b = tk.Label(self.newWindow,image=self.fgh)
+        #b.grid(column=2,row=1,columnspan=3)
+        self.button_dict = {}
+        for i in self.a:
+            b = tk.Label(self.newWindow,image=self.fgh)
+            b.grid(column=n,row=r, rowspan=2)
+            self.button_dict[i] = tk.Button(self.newWindow, text=i, command=lambda i=i: self.add_item(i))    #command=lambda x=i: func(x)
+            self.button_dict[i].grid(column=n, row=r, padx=5, pady=5)
+            n+=1
+            if n == 3:
+                n = 0
+                r += 1
+        
 
-    # layout on the root window
-    root.columnconfigure(0, weight=4)
-    root.columnconfigure(1, weight=1)
+    def add_item(self,i):
+        x = self.button_dict[i]['text']
+        print(x)
+        
 
-    input_frame = create_input_frame(root)
-    input_frame.grid(column=0, row=0)
+FRUIT_NAME = "Name"
+FRUIT_COST = "Price"
+amount = 0
+root = tk.Tk()
+app = Program(master=root)
+app.mainloop()
 
-    button_frame = create_button_frame(root)
-    button_frame.grid(column=1, row=0)
-
-    root.mainloop()
-
-
-if __name__ == "__main__":
-    create_main_window()

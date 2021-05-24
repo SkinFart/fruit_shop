@@ -13,6 +13,7 @@ class Program(tk.Frame):
         self.grid()
         self.a = self.c()
         self.create_widgets()
+        self.n=0
         master.geometry("600x400")
 
     def create_widgets(self):
@@ -30,17 +31,10 @@ class Program(tk.Frame):
 
 
         self.photo = ImageTk.PhotoImage(self.img)
-        #self.label1 = tk.Label(self,image=self.photo)
-        #self.label1.grid(row=6)
         
         # Image Button
         self.img_but = tk.Button(self, image=self.photo, command=self.openNewWindow)
         self.img_but.grid(row=3)
-
-        # self.hi_there = tk.Button(self)
-        # self.hi_there["text"] = "Hello World\n(click me)"
-        # self.hi_there["command"] = self.say_hi
-        # self.hi_there.grid(column=5, row=2) 
 
         # Amount
         xd = tk.Button(self,width="5", text="+1", command=self.mt)
@@ -51,10 +45,6 @@ class Program(tk.Frame):
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
         self.quit.grid(column=5, row=3)
-
-        # Label
-        acb = tk.Label(self, text="", width="80", height="20")
-        acb.grid(column=5, row=4)
 
         # Test that checks whats in combobox 
         xyz = ttk.Button(self, text="Get Value",command=self.check)
@@ -69,11 +59,6 @@ class Program(tk.Frame):
     def mt(self):
         print(amount)
     
-    def say_hi(self):
-        print("hi there, everyone!")
-        for i in fruit:
-	        print(fruit[i][FRUIT_NAME],fruit[i][FRUIT_COST])
-
     def c(self):
         a = []
         for i in fruit:
@@ -89,23 +74,31 @@ class Program(tk.Frame):
 
         self.newWindow.geometry("600x400")
 
-        a = tk.Button(self.newWindow, text='test', command=self.test)
-        a.grid(row=1)
+        #a = tk.Button(self.newWindow, text='test', command=self.test)
+        #a.grid(row=1)
 
+        r = 0
+        n=0
         img = Image.open("vvv.png")
-        img = img.resize((400,400), Image.ANTIALIAS)
+        img = img.resize((50,50), Image.ANTIALIAS)
         self.fgh = ImageTk.PhotoImage(img)
-        b = tk.Label(self.newWindow,image=self.fgh)
-        b.grid(column=2,row=1)
-
-    def add_item(self):
-        x = self.button['text']
-        print(x)
-
-    def test(self):
+        #b = tk.Label(self.newWindow,image=self.fgh)
+        #b.grid(column=2,row=1,columnspan=3)
+        self.button_dict = {}
         for i in self.a:
-            self.button = tk.Button(self.newWindow, text=i, command=self.add_item)    #command=lambda x=i: func(x)
-            self.button.grid()
+            b = tk.Label(self.newWindow,image=self.fgh)
+            b.grid(column=n,row=r, rowspan=2)
+            self.button_dict[i] = tk.Button(self.newWindow, text=i, command=lambda i=i: self.add_item(i))    #command=lambda x=i: func(x)
+            self.button_dict[i].grid(column=n, row=r, padx=5, pady=5)
+            n+=1
+            if n == 3:
+                n = 0
+                r += 1
+        
+
+    def add_item(self,i):
+        x = self.button_dict[i]['text']
+        print(x)
         
 
 FRUIT_NAME = "Name"

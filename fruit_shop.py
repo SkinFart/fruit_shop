@@ -72,7 +72,7 @@ class Program(tk.Frame):
         self.newWindow.geometry("800x500")
         self.newWindow.resizable(0,0)
 
-        self.newWindow.grid_columnconfigure(1, weight=0)
+        self.newWindow.grid_columnconfigure(1, weight=1)
 
         self.newWindow.grid_rowconfigure(1, weight=0)
 
@@ -83,19 +83,19 @@ class Program(tk.Frame):
         image_row=0
         n=0
         x=0
+        v=0  #for price in loop
         images=['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', ]
         images = iter(images)
             
-        for i in images:
-            print(i)
-            tyu = Image.open(i)
-            tyu = tyu.resize((100,100), Image.ANTIALIAS)
-            cringe = ImageTk.PhotoImage(tyu)
-            self.image_ref.append(cringe)
-            self.b = tk.Label(self.newWindow,image=cringe)
+        for i in images:  #For loop that creates the menu images
+            menu_image = Image.open(i)  #Opens the image, resizes it, sets it to a format for tkinter
+            menu_image = menu_image.resize((100,100), Image.ANTIALIAS)
+            display_image = ImageTk.PhotoImage(menu_image)
+            self.image_ref.append(display_image)  #Saves image refrence
+            self.b = tk.Label(self.newWindow,image=display_image)  #Creats the image label
             self.b.grid(column=image_column,row=image_row)
             image_column+=1
-            if image_column == 3:
+            if image_column == 3:  #This decides how many images on each row
                 image_column = 0
                 image_row += 2
 

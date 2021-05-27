@@ -4,7 +4,7 @@ from tkinter import ttk
 import random
 from test import fruit
 from tkinter import messagebox
-from PIL import ImageTk, Image  
+from PIL import Image, ImageTk 
 
 class Program(tk.Frame):
     def __init__(self, master=None):
@@ -14,7 +14,7 @@ class Program(tk.Frame):
         self.a = self.c()
         self.create_widgets()
         self.n=0
-        master.geometry("600x400")
+        master.geometry("800x500")
 
     def create_widgets(self):
         
@@ -76,7 +76,11 @@ class Program(tk.Frame):
 
         self.newWindow.grid_rowconfigure(1, weight=0)
 
+        self.image_ref = []
+
         r = 1
+        image_column=0
+        image_row=0
         n=0
         x=0
         images=['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', ]
@@ -104,15 +108,31 @@ class Program(tk.Frame):
             self.panel.img = img  # keep a reference so it's not garbage collected
             self.panel['image'] = img
             self.l=img
-            for i in images:
-                dxy=Image.open(i)
-                dxy.resize((100,100),Image.ANTIALIAS)
-                dxy = ImageTk.PhotoImage(dxy)
+            self.b = tk.Label(self.newWindow,image=self.l)
+            
+        for i in images:
+            print(i)
+            tyu = Image.open(i)
+            tyu = tyu.resize((100,100), Image.ANTIALIAS)
+            cringe = ImageTk.PhotoImage(tyu)
+            self.image_ref.append(cringe)
+
+            dxy=Image.open(i)
+            dxy.resize((100,100),Image.ANTIALIAS)
+            dxy = ImageTk.PhotoImage(dxy)
+            self.anz = ImageTk.PhotoImage(file=i)
+
+            self.b = tk.Label(self.newWindow,image=cringe)
+            self.b.grid(column=image_column,row=image_row)
+            image_column+=1
+            if image_column == 3:
+                image_column = 0
+                image_row += 2
 
         self.button_dict = {}
         for i in self.a:
-            skin()
-            self.b = tk.Label(self.newWindow,image=self.l)
+            #skin()
+            #self.b = tk.Label(self.newWindow,image=self.l)
             self.button_dict[i] = tk.Button(self.newWindow, text=i, width=25, command=lambda i=i: self.add_item(i))    #command=lambda x=i: func(x)
             self.b.grid(column=n,row=x)
             self.button_dict[i].grid(column=n, row=r)

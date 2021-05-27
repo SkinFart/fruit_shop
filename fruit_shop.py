@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import random
 from test import fruit
+from fruit2 import fruit2
 from tkinter import messagebox
 from PIL import Image, ImageTk 
 
@@ -64,6 +65,7 @@ class Program(tk.Frame):
         for i in fruit:
             x = fruit[i][FRUIT_NAME]
             a.append(x)
+        print(a)
         return(a)
 
     def openNewWindow(self):
@@ -82,6 +84,7 @@ class Program(tk.Frame):
         image_column=0
         image_row=0
         n=0
+        rrr=0
         x=0
         v=0  #for price in loop
         images=['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', ]
@@ -101,9 +104,12 @@ class Program(tk.Frame):
 
         self.button_dict = {}
         for i in self.a:
-            self.button_dict[i] = tk.Button(self.newWindow, text=i, width=25, command=lambda i=i: self.add_item(i))    #command=lambda x=i: func(x)
+            a=(fruit2["fruit"+str(rrr)][i])
+            self.button_dict[i] = tk.Button(self.newWindow, text=i+" "+a, width=25, command=lambda i=i: self.add_item(i))    #command=lambda x=i: func(x)
             self.b.grid(column=n,row=x)
             self.button_dict[i].grid(column=n, row=r)
+            a=(fruit2["fruit"+str(rrr)][i])
+            rrr+=1
             n+=1
             if n == 3:
                 n = 0

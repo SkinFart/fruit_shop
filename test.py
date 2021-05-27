@@ -11,7 +11,7 @@ fruit = {
 	'normal1': {"Name" : "Banana", 
 				"Price" : "$1.50 each"
 				},
-	'normal2': {"Name" : "Orange (6pck)", 
+	'normal2': {"Name" : "Orange(6pck)", 
 				"Price" : "$5 each"
 				},
 	'normal3': {"Name" : "Kiwi(4pck)", 

@@ -4,7 +4,7 @@ from tkinter import ttk
 import random
 from test import fruit
 from tkinter import messagebox
-from PIL import Image, ImageTk 
+from PIL import ImageTk, Image  
 
 class Program(tk.Frame):
     def __init__(self, master=None):
@@ -14,7 +14,7 @@ class Program(tk.Frame):
         self.a = self.c()
         self.create_widgets()
         self.n=0
-        master.geometry("800x500")
+        master.geometry("600x400")
 
     def create_widgets(self):
         
@@ -26,15 +26,15 @@ class Program(tk.Frame):
         self.abc.current(0)
 
         # Create Image for item
-        #self.img = Image.open("vvv.png")
-        #self.img = self.img.resize((50,50), Image.ANTIALIAS)
+        self.img = Image.open("vvv.png")
+        self.img = self.img.resize((50,50), Image.ANTIALIAS)
 
 
-        #self.photo = ImageTk.PhotoImage(self.img)
+        self.photo = ImageTk.PhotoImage(self.img)
         
         # Image Button
-        self.neww = tk.Button(self, text='newWin', command=self.openNewWindow)
-        self.neww.grid(row=3)
+        self.img_but = tk.Button(self, image=self.photo, command=self.openNewWindow)
+        self.img_but.grid(row=3)
 
         # Amount
         xd = tk.Button(self,width="5", text="+1", command=self.mt)
@@ -67,48 +67,33 @@ class Program(tk.Frame):
         return(a)
 
     def openNewWindow(self):
+        
         self.newWindow = tk.Toplevel(root)
+
         self.newWindow.title("New Window")
-        self.newWindow.geometry("800x500")
-        self.newWindow.resizable(0,0)
 
-        self.newWindow.grid_columnconfigure(1, weight=0)
+        self.newWindow.geometry("600x400")
 
-        self.newWindow.grid_rowconfigure(1, weight=0)
+        #a = tk.Button(self.newWindow, text='test', command=self.test)
+        #a.grid(row=1)
 
-        self.image_ref = []
-
-        r = 1
-        image_column=0
-        image_row=0
+        r = 0
         n=0
-        x=0
-        images=['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', ]
-        images = iter(images)
-            
-        for i in images:
-            print(i)
-            tyu = Image.open(i)
-            tyu = tyu.resize((100,100), Image.ANTIALIAS)
-            cringe = ImageTk.PhotoImage(tyu)
-            self.image_ref.append(cringe)
-            self.b = tk.Label(self.newWindow,image=cringe)
-            self.b.grid(column=image_column,row=image_row)
-            image_column+=1
-            if image_column == 3:
-                image_column = 0
-                image_row += 2
-
+        img = Image.open("vvv.png")
+        img = img.resize((50,50), Image.ANTIALIAS)
+        self.fgh = ImageTk.PhotoImage(img)
+        #b = tk.Label(self.newWindow,image=self.fgh)
+        #b.grid(column=2,row=1,columnspan=3)
         self.button_dict = {}
         for i in self.a:
-            self.button_dict[i] = tk.Button(self.newWindow, text=i, width=25, command=lambda i=i: self.add_item(i))    #command=lambda x=i: func(x)
-            self.b.grid(column=n,row=x)
-            self.button_dict[i].grid(column=n, row=r)
+            b = tk.Label(self.newWindow,image=self.fgh)
+            b.grid(column=n,row=r, rowspan=2)
+            self.button_dict[i] = tk.Button(self.newWindow, text=i, command=lambda i=i: self.add_item(i))    #command=lambda x=i: func(x)
+            self.button_dict[i].grid(column=n, row=r, padx=5, pady=5)
             n+=1
             if n == 3:
                 n = 0
-                r += 2
-                x += 2
+                r += 1
         
 
     def add_item(self,i):

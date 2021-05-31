@@ -15,6 +15,7 @@ class Program(tk.Frame):
         self.a = self.c()
         self.create_widgets()
         self.n=0
+        self.amount=0
         master.geometry("800x500")
 
     def create_widgets(self):
@@ -60,6 +61,16 @@ class Program(tk.Frame):
     def mt(self):
         print(amount)
     
+    def buy(self,i):
+        x = self.button_dict[i]['text']
+        #print(x)
+        cost=fruit2[i]
+        cost=cost.split(" ")
+        cost=cost[0].strip("$")
+        self.amount=self.amount+float(cost)
+        self.total['text']=f"Total: ${self.amount:.2f}"
+        print(self.amount)
+
     def c(self):
         a = []
         for i in fruit:
@@ -87,15 +98,15 @@ class Program(tk.Frame):
         rrr=0
         x=0
         v=0  #for price in loop
-        images=['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', ]
+        images=['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', ]  #List of images
         images = iter(images)
             
         for i in images:  #For loop that creates the menu images
             menu_image = Image.open(i)  #Opens the image, resizes it, sets it to a format for tkinter
-            menu_image = menu_image.resize((100,100), Image.ANTIALIAS)
+            menu_image = menu_image.resize((125,125), Image.ANTIALIAS)
             display_image = ImageTk.PhotoImage(menu_image)
             self.image_ref.append(display_image)  #Saves image refrence
-            self.b = tk.Label(self.newWindow,image=display_image)  #Creats the image label
+            self.b = tk.Label(self.newWindow,image=display_image,borderwidth=2,relief="groove")  #Creats the image label
             self.b.grid(column=image_column,row=image_row)
             image_column+=1
             if image_column == 3:  #This decides how many images on each row
@@ -104,11 +115,11 @@ class Program(tk.Frame):
 
         self.button_dict = {}
         for i in self.a:
-            a=(fruit2["fruit"+str(rrr)][i])
-            self.button_dict[i] = tk.Button(self.newWindow, text=i+" "+a, width=25, command=lambda i=i: self.add_item(i))    #command=lambda x=i: func(x)
+            a=(fruit2[i])
+            self.button_dict[i] = tk.Button(self.newWindow, text=i+" "+a, width=25, command=lambda i=i: self.buy(i)) 
             self.b.grid(column=n,row=x)
             self.button_dict[i].grid(column=n, row=r)
-            a=(fruit2["fruit"+str(rrr)][i])
+            a=(fruit2[i])
             rrr+=1
             n+=1
             if n == 3:
@@ -116,6 +127,8 @@ class Program(tk.Frame):
                 r += 2
                 x += 2
         
+        self.total = tk.Label(self.newWindow, text="Total Cost: "+str(self.amount))
+        self.total.grid(row=9, column=3)
 
     def add_item(self,i):
         x = self.button_dict[i]['text']

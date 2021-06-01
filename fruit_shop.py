@@ -18,39 +18,33 @@ class Program(tk.Frame):
         self.amount=0
         master.geometry("800x500")
 
+
     def create_widgets(self):
         
         # Create combo box for deals on product
         n = tk.StringVar()
         self.abc = ttk.Combobox(self, width = 27, textvariable = n)
         self.abc["values"] = (self.a)
-        self.abc.grid(column=5, row=1)
+        self.abc.grid(column=0, row=1)
         self.abc.current(0)
 
-        # Create Image for item
-        #self.img = Image.open("vvv.png")
-        #self.img = self.img.resize((50,50), Image.ANTIALIAS)
+        self.shop = tk.Label(self,text="The Uce's Fruit Shop", borderwidth=2,relief="groove",bg="red")
+        self.shop.config(font=("Arial", 30))
+        self.shop.grid(row=0,column=1,rowspan=1,columnspan=2)
 
-
-        #self.photo = ImageTk.PhotoImage(self.img)
-        
-        # Image Button
-        self.neww = tk.Button(self, text='newWin', command=self.openNewWindow)
-        self.neww.grid(row=3)
-
-        # Amount
-        xd = tk.Button(self,width="5", text="+1", command=self.mt)
-        xd.grid(column=5, row=2)
+        # Opens order window
+        self.order_button = tk.Button(self, text="Order",command=self.openNewWindow )
+        self.order_button.grid()
 
 
         # Button that closes the program
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
-        self.quit.grid(column=5, row=3)
+        self.quit.grid(column=1, row=3)
 
         # Test that checks whats in combobox 
-        xyz = ttk.Button(self, text="Get Value",command=self.check)
-        xyz.grid(column=5, row=4)
+        self.xyz = ttk.Button(self, text="Get Value",command=self.check)
+        self.xyz.grid(column=1, row=4)
 
     
     def check(self):

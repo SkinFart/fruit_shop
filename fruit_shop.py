@@ -16,7 +16,7 @@ class Program(tk.Frame):
         self.create_widgets()
         self.n=0
         self.amount=0
-        master.geometry("800x500")
+        #master.geometry("800x500")
 
 
     def create_widgets(self):
@@ -25,26 +25,37 @@ class Program(tk.Frame):
         n = tk.StringVar()
         self.abc = ttk.Combobox(self, width = 27, textvariable = n)
         self.abc["values"] = (self.a)
-        self.abc.grid(column=0, row=1)
+        self.abc.grid(column=4, row=6)
         self.abc.current(0)
+
+        
 
         self.shop = tk.Label(self,text="The Uce's Fruit Shop", borderwidth=2,relief="groove",bg="red")
         self.shop.config(font=("Arial", 30))
-        self.shop.grid(row=0,column=1,rowspan=1,columnspan=2)
+        self.shop.grid(row=0,column=2,rowspan=2,columnspan=3,padx=15,pady=15,ipady=15,ipadx=15)
 
         # Opens order window
         self.order_button = tk.Button(self, text="Order",command=self.openNewWindow )
-        self.order_button.grid()
+        self.order_button.config(font=("Arial", 22))
+        self.order_button.grid(row=4,column=3, columnspan=2)
+
+        self.temp = tk.Button(self,text="temp")
+        self.temp.config(font=("Arial", 22))
+        self.temp.grid(row=4,column=3,columnspan=1)
+
+        self.temp2 = tk.Button(self,text="temp2")
+        self.temp2.config(font=("Arial", 22))
+        #self.temp2.grid(row=4,column=5,columnspan=2)
 
 
         # Button that closes the program
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
-        self.quit.grid(column=1, row=3)
+        self.quit.grid(column=5, row=6,padx=5,pady=5,ipadx=5,ipady=5)
 
         # Test that checks whats in combobox 
         self.xyz = ttk.Button(self, text="Get Value",command=self.check)
-        self.xyz.grid(column=1, row=4)
+        self.xyz.grid(column=3, row=8)
 
     
     def check(self):

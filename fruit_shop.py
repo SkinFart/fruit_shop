@@ -1,4 +1,3 @@
-#from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 import random
@@ -6,6 +5,8 @@ from test import fruit
 from fruit2 import fruit2
 from tkinter import messagebox
 from PIL import Image, ImageTk 
+from functools import partial
+
 
 class Program(tk.Frame):
     def __init__(self, master=None):
@@ -16,7 +17,6 @@ class Program(tk.Frame):
         self.create_widgets()
         self.n=0
         self.amount=0
-        #master.geometry("800x500")
 
 
     def create_widgets(self):
@@ -29,33 +29,47 @@ class Program(tk.Frame):
         self.abc.current(0)
 
         
-
-        self.shop = tk.Label(self,text="The Uce's Fruit Shop", borderwidth=2,relief="groove",bg="red")
+        # Store title label
+        self.shop = tk.Label(self,text="The Uce's Fruit Shop", borderwidth=2,relief="groove",bg="red", width=35)
         self.shop.config(font=("Arial", 30))
-        self.shop.grid(row=0,column=2,rowspan=2,columnspan=3,padx=15,pady=15,ipady=15,ipadx=15)
+        self.shop.grid(row=0,column=2,rowspan=2,columnspan=6,padx=15,pady=15,ipady=15,ipadx=15)
+
+        self.fff=tk.Label(self,text='',height=30)
+        self.fff.grid()
+        
 
         # Opens order window
         self.order_button = tk.Button(self, text="Order",command=self.openNewWindow )
         self.order_button.config(font=("Arial", 22))
-        self.order_button.grid(row=4,column=3, columnspan=2)
+        self.order_button.grid(row=4,column=3, columnspan=1)
+        
 
-        self.temp = tk.Button(self,text="temp")
-        self.temp.config(font=("Arial", 22))
-        self.temp.grid(row=4,column=3,columnspan=1)
+        # View order button
+        self.view_order = tk.Button(self,text="View Order")
+        self.view_order.config(font=("Arial", 22))
+        self.view_order.grid(row=4,column=4,columnspan=1)
 
-        self.temp2 = tk.Button(self,text="temp2")
-        self.temp2.config(font=("Arial", 22))
-        #self.temp2.grid(row=4,column=5,columnspan=2)
+
+        # Admin login button
+        self.admin_user = tk.Button(self,text="Admin",command=self.admin_login)
+        self.admin_user.config(font=("Arial", 22))
+        self.admin_user.grid(row=4,column=5,columnspan=1)
+
+
+        # Spacer
+        self.aaa=tk.Label(self,text='',width=15)
+        self.aaa.grid(row=4,column=0,columnspan=3)
 
 
         # Button that closes the program
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
-        self.quit.grid(column=5, row=6,padx=5,pady=5,ipadx=5,ipady=5)
+        self.quit.config(font=("Arial", 22))
+        self.quit.grid(column=6, row=6,padx=5,pady=5,ipadx=5,ipady=5)
 
         # Test that checks whats in combobox 
         self.xyz = ttk.Button(self, text="Get Value",command=self.check)
-        self.xyz.grid(column=3, row=8)
+        self.xyz.grid(column=3, row=6)
 
     
     def check(self):
@@ -87,7 +101,7 @@ class Program(tk.Frame):
     def openNewWindow(self):
         self.newWindow = tk.Toplevel(root)
         self.newWindow.title("New Window")
-        self.newWindow.geometry("800x500")
+        self.newWindow.geometry("900x700")
         self.newWindow.resizable(0,0)
 
         self.newWindow.grid_columnconfigure(1, weight=1)
@@ -139,6 +153,41 @@ class Program(tk.Frame):
         x = self.button_dict[i]['text']
         print(x)
         
+    def admin_login(self):  # Admin login window
+        self.admin = tk.Toplevel(root)
+        self.admin.title("New Window")
+        self.admin.resizable(0,0)
+
+        self.title_label = tk.Label(self.admin,text="Admin Login",width=25,bg="teal")
+        self.title_label.config(font=("Arial", 26))
+        self.title_label.grid(ipadx=5,ipady=5)
+
+        password = tk.StringVar()
+        username = tk.StringVar()
+
+        self.user_label = tk.Label(self.admin,text="User Name: ")
+        self.user_label.config(font=("Arial", 16))
+        self.user_label.grid(padx=15,pady=10)
+
+        self.user_entry = tk.Entry(self.admin,text=username)
+        self.user_entry.grid(padx=15,pady=10)
+
+        self.pass_label = tk.Label(self.admin,text="Password: ")
+        self.pass_label.config(font=("Arial", 16))
+        self.pass_label.grid(padx=15,pady=10)
+
+        self.user_pass = tk.Entry(self.admin,text=password)
+        self.user_pass.grid(padx=15,pady=10)
+
+        validateLogin = partial(self.validateLogin, username, password)
+        
+        login_button=tk.Button(self.admin,text='login',command=validateLogin)
+        login_button.grid(padx=15,pady=15)
+        
+    def validateLogin(self,username, password):
+        print("username entered :", username.get())
+        print("password entered :", password.get())
+        return   
 
 FRUIT_NAME = "Name"
 FRUIT_COST = "Price"

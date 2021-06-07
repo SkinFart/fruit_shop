@@ -1,5 +1,5 @@
 fruit2 = {
-	"Jackfruit" : "$5.99 kg",
+	"Jackfruit" : "$6.00 each",
 	"Durian" :"$4.50 each",
 	"Guava" : "$2 each",
 	"Banana" : "$1.50 each" ,
